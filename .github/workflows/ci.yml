@@ -1,0 +1,22 @@
+# ไฟล์นี้จะชื่ออะไรก็ได้หมายถึงชื่อไฟล์นะ ci.yml หรือ uptoyou.yml ก็ได้
+
+name: CI # เป็นชื่อของ workfkow นี้
+
+on: [push] # on จะระบุ event ที่จะเกิดขึ้นใน worlflow นี้จะเป็น push, pull_request หรืออื่นๆ ก็ได้
+
+
+jobs: # คืองานที่เราต้องการจะ run
+  build: # งาน build
+
+
+    runs-on: ubuntu-latest # เป็นการระบุ os ที่ต้องการว่าเราต้องการรันบน os อะไร
+
+
+    steps: # เป็นการแสดง step ต่างๆ ที่เราต้องการจะรันบน job นี้
+    - uses: actions/checkout@v1 # เป็นการระบุ action เราใช้ version 1 ของ checkout action ที่รับผิดชอบในการ clon repo และ chek ข้งใน dicrectory ของเรา
+    - name: Run a one-line script
+      run: echo hello, world!
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project
