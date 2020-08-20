@@ -1,4 +1,5 @@
-name: Node CI
+name: CI
+
 on:
   push:
     branches:    
@@ -10,10 +11,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+
     - name: yarn install
       run: |
         yarn install
