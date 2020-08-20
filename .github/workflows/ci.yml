@@ -33,10 +33,7 @@ jobs:
     - name: Add remote origin
       run: |
         git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-     
+    
     - name: Deploy to production
-      uses: akhileshns/heroku-deploy@v3.0.0
-      with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: "test-github-ci"
-        heroku_email: "pacharamai@hospital-os.com"
+      run: |
+        $ git push -f heroku master
