@@ -15,7 +15,7 @@ jobs: # คืองานที่เราต้องการจะ run
     runs-on: ubuntu-latest # เป็นการระบุ os ที่ต้องการว่าเราต้องการรันบน os อะไร
 
 
-     strategy:
+    strategy:
       matrix:
         node-version: [8.x, 10.x, 12.x]
 
