@@ -15,9 +15,9 @@ jobs: # คืองานที่เราต้องการจะ run
     runs-on: ubuntu-latest # เป็นการระบุ os ที่ต้องการว่าเราต้องการรันบน os อะไร
 
 
-    strategy:
-      matrix: # ให้ run build บน node version 10.x, 8.x
-        node-version: [10.x]
+     strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
 
 
     steps: # เป็นการแสดง step ต่างๆ ที่เราต้องการจะรันบน job นี้
