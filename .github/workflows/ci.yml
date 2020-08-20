@@ -2,7 +2,10 @@
 
 name: CI # เป็นชื่อของ workfkow นี้
 
-on: [push] # on จะระบุ event ที่จะเกิดขึ้นใน worlflow นี้จะเป็น push, pull_request หรืออื่นๆ ก็ได้
+on:  # on จะระบุ event ที่จะเกิดขึ้นใน worlflow นี้จะเป็น push, pull_request หรืออื่นๆ ก็ได้
+  push:
+    branches:
+      - master # จะทำงานเมื่อเรา push เข้า branch master เท่านั้น
 
 
 jobs: # คืองานที่เราต้องการจะ run
@@ -12,11 +15,37 @@ jobs: # คืองานที่เราต้องการจะ run
     runs-on: ubuntu-latest # เป็นการระบุ os ที่ต้องการว่าเราต้องการรันบน os อะไร
 
 
+    strategy:
+      matrix: # ให้ run build บน node version 10.x, 8.x
+        node-version: [10.x, 8.x]
+
+
     steps: # เป็นการแสดง step ต่างๆ ที่เราต้องการจะรันบน job นี้
-    - uses: actions/checkout@v1 # เป็นการระบุ action เราใช้ version 1 ของ checkout action ที่รับผิดชอบในการ clon repo และ chek ข้งใน dicrectory ของเรา
-    - name: Run a one-line script
-      run: echo hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project
+      - uses: actions/checkout@v1 # เป็นการระบุ action เราใช้ version 1 ของ checkout action ที่รับผิดชอบในการ clon repo และ chek ข้งใน dicrectory ของเรา
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1 # action นี้รับผิดชอบในการ install node version ที่ระบุใน ci environment (10.x, 8.x)
+        with:
+          node-version: ${{ matrix.node-version }}
+        
+      
+      - name: yarn install
+        run: |
+          yarn install
+      - name: yarn test
+        run: |
+          yarn test
+        env:
+          CI: true # ให้ non-interactive
+
+
+      - name: yarn build
+        run: |
+          yarn run build -- if-present
+
+      
+      - name: Add remote origin
+        run: |
+          git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      - name: Deploy to heroku
+        run: |
+          git push heroku HEAD:master -f
