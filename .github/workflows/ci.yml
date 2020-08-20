@@ -36,4 +36,4 @@ jobs:
     
     - name: Deploy to production
       run: |
-        $ git push heroku master
+        git push heroku master
