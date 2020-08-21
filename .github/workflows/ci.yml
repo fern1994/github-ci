@@ -11,11 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    
+   
     - name: Deploy to production
       uses: akhileshns/heroku-deploy@v3.0.0
       with:
